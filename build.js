@@ -22,7 +22,7 @@ const PRODUCTION_ENVIRONMENT_VARIABLES = {
 
 const DEVELOPMENT_ENVIRONMENT_VARIABLES = {
   ENVIRONMENT: 'development',
-  BACKEND_URL: 'http://localhost:4000/v1',
+  BACKEND_URL: 'https://api.wavenet-for-chrome.com/v1',
 }
 
 const ENVIRONMENT_VARIABLES =
@@ -87,7 +87,7 @@ async function build() {
   console.timeEnd('ℹ️ Copied public folder')
 
   console.time('ℹ️ Built manifest')
-  const manifest = (await import('./src/extension/manifest')).default
+  const manifest = (await import('./src/extension/manifest.ts')).default
   writeFileSync('dist/manifest.json', JSON.stringify(manifest, null, 2))
   console.timeEnd('ℹ️ Built manifest')
 

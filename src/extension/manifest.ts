@@ -19,15 +19,29 @@ export default {
   commands: {
     readAloudShortcut: {
       suggested_key: {
-        default: 'Ctrl+Shift+S',
-        mac: 'Command+Shift+S',
+        default: 'Ctrl+Shift+A',
+        mac: 'Command+Shift+A',
       },
       description: 'Read aloud',
     },
-    downloadShortcut: {
+    slower: {
       suggested_key: {
-        default: 'Ctrl+Shift+E',
-        mac: 'Command+Shift+E',
+        default: 'Ctrl+Shift+[',
+        mac: 'Command+Shift+[',
+      },
+      description: 'Reduce speech rate, client-side',
+    },
+    faster: {
+      suggested_key: {
+        default: 'Ctrl+Shift+]',
+        mac: 'Command+Shift+]',
+      },
+      description: 'Increase speech rate, client-side',
+    },
+    download: {
+      suggested_key: {
+        default: 'Ctrl+Shift+S',
+        mac: 'Command+Shift+S',
       },
       description: 'Download',
     },

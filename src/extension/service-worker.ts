@@ -504,8 +504,9 @@ async function updateContextMenus() {
   const commands = await chrome.commands.getAll()
   const encoding = (await chrome.storage.sync.get()).downloadEncoding
   const fileExt = fileExtMap[encoding]
-  const downloadShortcut = commands.find((c) => c.name === 'downloadShortcut')
-    ?.shortcut
+  const downloadShortcut = commands.find(
+    (c) => c.name === 'downloadShortcut',
+  )?.shortcut
 
   chrome.contextMenus.update('readAloud', {
     enabled: true,
@@ -527,10 +528,12 @@ async function createContextMenus() {
   chrome.contextMenus.removeAll()
 
   const commands = await chrome.commands.getAll()
-  const readAloudShortcut = commands.find((c) => c.name === 'readAloudShortcut')
-    ?.shortcut
-  const downloadShortcut = commands.find((c) => c.name === 'downloadShortcut')
-    ?.shortcut
+  const readAloudShortcut = commands.find(
+    (c) => c.name === 'readAloudShortcut',
+  )?.shortcut
+  const downloadShortcut = commands.find(
+    (c) => c.name === 'downloadShortcut',
+  )?.shortcut
   const downloadEncoding = (await chrome.storage.sync.get()).downloadEncoding
   const fileExt = fileExtMap[downloadEncoding]
 
@@ -581,7 +584,7 @@ async function hasOffscreenDocument(path) {
 
   const offscreenUrl = chrome.runtime.getURL(path)
   // @ts-ignore
-  const matchedClients = await clients.matchAll()
+  const matchedClients = await clients.matchAll() //Bryan: what does this do?
 
   for (const client of matchedClients) {
     if (client.url === offscreenUrl) return true
@@ -598,18 +601,19 @@ async function setDefaultSettings() {
   })
 
   const sync = await chrome.storage.sync.get()
-
-  await chrome.storage.sync.set({
+  const defaultValues = {
     language: sync.language || 'en-US',
-    speed: sync.speed || 1,
+    speed: sync.speed || 1.8,
     pitch: sync.pitch || 0,
-    voices: sync.voices || { 'en-US': 'en-US-Polyglot-1' },
+    voices: sync.voices || { 'en-US': 'en-US-Wavenet-J' },
     readAloudEncoding: sync.readAloudEncoding || 'OGG_OPUS',
     downloadEncoding: sync.downloadEncoding || 'MP3_64_KBPS',
     apiKey: sync.apiKey || '',
     audioProfile: sync.audioProfile || 'default',
-    volumeGainDb: sync.volumeGainDb || 0,
-  })
+    volumeGainDb: sync.volumeGainDb || 16,
+  };
+  console.info('Setting values are', JSON.stringify(defaultValues, null, 2));
+  await chrome.storage.sync.set(defaultValues)
 }
 
 async function setLanguages() {
